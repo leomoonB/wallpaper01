@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Live Wallpaper with Clock</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #0ff, #00f);
+      position: absolute;
+      animation: float 5s infinite alternate;
+      opacity: 0.6;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(200px); }
+    }
+
+    /* นาฬิกา */
+    .clock {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      font-size: 60px;
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff, 0 0 40px #00f;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" id="clock">00:00:00</div>
+
+  <script>
+    // สร้างวงกลมลอย ๆ
+    for(let i=0; i<20; i++){
+      let c = document.createElement("div");
+      c.className = "circle";
+      c.style.left = Math.random()*window.innerWidth + "px";
+      c.style.top = Math.random()*window.innerHeight + "px";
+      c.style.animationDuration = (3+Math.random()*5)+"s";
+      document.body.appendChild(c);
+    }
+
+    // อัปเดตนาฬิกา
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const s = String(now.getSeconds()).padStart(2,'0');
+      document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock(); // เรียกทันทีตอนเริ่ม
+  </script>
+</body>
+</html>
